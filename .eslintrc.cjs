@@ -1,4 +1,5 @@
 module.exports = {
+  files: ['**/*.{ts,tsx}'],
   root: true,
   env: { browser: true, es2020: true },
   extends: [

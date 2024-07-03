@@ -1,0 +1,18 @@
+.inputSearch {
+    width: 12rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid gray;
+    outline: none;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin-left: 1rem;
+    padding-left: 1rem;
+}
+
+input::placeholder {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
