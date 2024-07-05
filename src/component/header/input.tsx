@@ -15,6 +15,7 @@ export default class Input extends React.Component<InputProps> {
         className={className}
         id={className}
         placeholder={placeholder}
+        value={String(localStorage.getItem('search'))}
       ></input>
     );
   }

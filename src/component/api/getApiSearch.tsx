@@ -7,24 +7,24 @@ async function fetchData(url: string) {
     const data = await response.json();
     return { success: true, data };
   } catch (error) {
-    console.error('Fetch error:', error);
+    console.error("Fetch error:", error);
     return { success: false, error };
   }
 }
 
 async function fetchAllData(urls: Array<string>) {
-  const fetchPromises = urls.map(url => fetchData(url));
+  const fetchPromises = urls.map((url) => fetchData(url));
   const results = await Promise.all(fetchPromises);
 
   const successfulResults = results
-    .filter(result => result.success)
-    .map(result => result.data);
+    .filter((result) => result.success)
+    .map((result) => result.data);
 
   return successfulResults;
 }
 
-export default async function getApi() {
-  const input = document.getElementById('inputSearch') as HTMLInputElement
+export default async function getApiSearch() {
+  const input = document.getElementById("inputSearch") as HTMLInputElement;
   const search = input.value;
 
   const urls = [
@@ -37,5 +37,5 @@ export default async function getApi() {
   ];
 
   const allResults = await fetchAllData(urls);
-  console.log('All successful results:', allResults);
+  return allResults;
 }

@@ -1,0 +1,9 @@
+.navBar {
+    display: flex;
+    flex-direction: row;
+}
+
+.lincNavBar {
+    margin-left: 1rem;
+    cursor: pointer;
+}
