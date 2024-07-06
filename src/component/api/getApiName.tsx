@@ -1,4 +1,4 @@
-export default async function getApiAll(url: string) {
+export default async function getApiName(url: string) {
   try {
     const response = await fetch(url);
     if (!response.ok) {

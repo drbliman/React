@@ -1,7 +1,6 @@
 import React from "react";
 import Input from "./input";
 import Button from "./button";
-// import NavBar from "./navBar";
 import "../../../public/css/header/header.css";
 
 export default class Header extends React.Component {
@@ -11,7 +10,6 @@ export default class Header extends React.Component {
         <header className="header" id="header">
           <Input className="inputSearch" placeholder="Search..." />
           <Button className="buttonSearch" textContent="Search"></Button>
-          {/* <NavBar></NavBar> */}
         </header>
       </>
     );
