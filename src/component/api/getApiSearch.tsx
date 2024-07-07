@@ -25,7 +25,7 @@ async function fetchAllData(urls: Array<string>) {
 
 export default async function getApiSearch() {
   const input = document.getElementById("inputSearch") as HTMLInputElement;
-  const search = input.value;
+  const search = input.value.trim();
 
   const urls = [
     `https://swapi.dev/api/people/?search=${search}`,

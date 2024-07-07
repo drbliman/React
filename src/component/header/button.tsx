@@ -6,14 +6,18 @@ interface ButtonProps {
   textContent?: string;
 }
 
-export default class Button extends React.Component<ButtonProps> {
+export class Button extends React.Component<ButtonProps> {
   render(): React.ReactNode {
-    const handleClick = () => {
-      const event = new CustomEvent("searchEvent");
-      window.dispatchEvent(event);
-    };
     const { className } = this.props;
     const { textContent } = this.props;
+
+    const customEvent = className === 'buttonSearch' ? "searchEvent" : 'errorEvent';
+
+    const handleClick = () => {
+      const event = new CustomEvent(customEvent);
+      window.dispatchEvent(event);
+    };
+
     return (
       <button className={className} id={className} onClick={handleClick}>
         {textContent}

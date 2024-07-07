@@ -14,7 +14,7 @@ export default class Post extends React.Component<{}, PostState> {
     super(props);
     this.state = {
       posts: [],
-      isLoading: false, 
+      isLoading: false,
     };
   }
 
@@ -45,6 +45,19 @@ export default class Post extends React.Component<{}, PostState> {
       return <div className="loading" id="loading"></div>;
     }
 
+    let allResultsEmpty = true;
+
+    for (const elem of posts) {
+      if (elem.results.length > 0) {
+        allResultsEmpty = false;
+        break;
+      }
+    }
+
+    if (allResultsEmpty) {
+      return <h1>Oops, looks like nothing was found</h1>;
+    }
+
     if (posts.length > 0) {
       const postsDiv = posts.map((elem, index) => {
         if (elem.results.length > 0) {
@@ -64,7 +77,11 @@ export default class Post extends React.Component<{}, PostState> {
         return null;
       });
 
-      return <div className="results" id="results">{postsDiv}</div>;
+      return (
+        <div className="results" id="results">
+          {postsDiv}
+        </div>
+      );
     }
     return null;
   }

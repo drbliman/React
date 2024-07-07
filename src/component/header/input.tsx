@@ -25,7 +25,7 @@ export default class Input extends React.Component<InputProps, State> {
 
   handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ inputValue: event.target.value });
-    localStorage.setItem('search', `${event.target.value}`);
+    localStorage.setItem("search", `${event.target.value}`);
   };
 
   render(): React.ReactNode {
