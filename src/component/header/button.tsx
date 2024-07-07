@@ -9,7 +9,7 @@ interface ButtonProps {
 export default class Button extends React.Component<ButtonProps> {
   render(): React.ReactNode {
     const handleClick = () => {
-      const event = new CustomEvent('searchEvent');
+      const event = new CustomEvent("searchEvent");
       window.dispatchEvent(event);
     };
     const { className } = this.props;

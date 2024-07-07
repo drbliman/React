@@ -4,7 +4,6 @@ import Main from "./component/main/mainDiv";
 
 export default class App extends React.Component {
   render() {
-    localStorage.setItem("search", "Skywalker");
     return (
       <>
         <Header />

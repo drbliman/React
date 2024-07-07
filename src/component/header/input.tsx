@@ -19,12 +19,13 @@ export default class Input extends React.Component<InputProps, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      inputValue: String(localStorage.getItem("search")) || "Skywalker"
+      inputValue: String(localStorage.getItem("search")) || "Skywalker",
     };
   }
 
   handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ inputValue: event.target.value });
+    localStorage.setItem('search', `${event.target.value}`);
   };
 
   render(): React.ReactNode {
