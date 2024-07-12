@@ -1,8 +1,10 @@
 .header {
     width: 100%;
-    height: 3rem;
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
     background-color: gray;
+}
+
+.headerContainer {
+    margin-top: 1rem;
 }

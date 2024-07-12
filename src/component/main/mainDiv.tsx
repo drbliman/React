@@ -5,6 +5,6 @@ const Main = () => (
   <main className="main" id="main">
     <Post></Post>
   </main>
-)
+);
 
 export default Main;

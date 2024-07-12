@@ -21,7 +21,7 @@ const Button = (props: ButtonProps) => {
     <button className={className} id={className} onClick={handleClick}>
       {textContent}
     </button>
-  )
-}
+  );
+};
 
 export default Button;

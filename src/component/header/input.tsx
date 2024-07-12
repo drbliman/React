@@ -7,7 +7,9 @@ type Props = {
 };
 
 const Input = (props: Props) => {
-  const [state, setState] = React.useState(String(localStorage.getItem("search")) || "Skywalker");
+  const [state, setState] = React.useState(
+    String(localStorage.getItem("search")) || "Skywalker",
+  );
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState(event.target.value);
@@ -26,6 +28,6 @@ const Input = (props: Props) => {
       onChange={handleInputChange}
     ></input>
   );
-}
+};
 
 export default Input;
