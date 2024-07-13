@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import "../../../public/css/header/inputs.css";
 
 type Props = {
@@ -7,8 +8,15 @@ type Props = {
 };
 
 const Input = (props: Props) => {
+  const { search } = useParams();
+  let searchInput = String(localStorage.getItem("search"));
+
+  if (search !== localStorage.getItem('search') && search !== undefined) {
+    searchInput = String(search);
+  }
+
   const [state, setState] = React.useState(
-    String(localStorage.getItem("search")) || "Skywalker",
+    searchInput || "Skywalker",
   );
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

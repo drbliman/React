@@ -7,7 +7,6 @@ async function fetchData(url: string) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Fetch error:", error);
@@ -15,13 +14,25 @@ async function fetchData(url: string) {
   return null;
 }
 
-export default async function getApiSearch(root: string): Promise<StarWarsEntity> {
+async function getApiSearch(
+  root: string,
+  idPage: string,
+  status: 'search' | 'details',
+): Promise<StarWarsEntity> {
   const input = document.getElementById("inputSearch") as HTMLInputElement;
   const search = input.value.trim();
 
-  const urls = `https://swapi.dev/api/${root}/?search=${search}`;
+  let url: string;
 
-  const allResults = await fetchData(urls);
-  
+  if (status === 'search') {
+    url = `https://swapi.dev/api/${root}/?search=${search}&page=${idPage}`;
+  } else {
+    url = `https://swapi.dev/api/${root}/${idPage}/`;
+  }
+
+  const allResults = await fetchData(url);
+
   return allResults;
 }
+
+export { getApiSearch }
