@@ -19,7 +19,7 @@ async function getApiSearch(
   idPage: string,
   status: "search" | "details",
 ): Promise<StarWarsEntity> {
-  const search = localStorage.getItem('search');
+  const search = localStorage.getItem("search");
 
   let url: string;
 
