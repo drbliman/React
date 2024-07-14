@@ -2,11 +2,14 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { StarWarsEntity } from "../api/dataInterface";
 import { getApiSearch } from "../api/getApiSearch";
-import '../../../public/css/main/details.css';
+import "../../../public/css/main/details.css";
 
 const Details = () => {
   const { root, search, idPage, idDetails } = useParams();
-  const searchIdDetails = React.useMemo(() => idDetails?.split('_'), [idDetails]);
+  const searchIdDetails = React.useMemo(
+    () => idDetails?.split("_"),
+    [idDetails],
+  );
   const navigate = useNavigate();
   let postState: StarWarsEntity = {};
 
@@ -20,7 +23,11 @@ const Details = () => {
   React.useEffect(() => {
     const fetchData = async () => {
       setState({ posts: {}, isLoading: true });
-      const postsData = await getApiSearch(String(root), String(searchIdDetails ? searchIdDetails[1] : ''), 'details');
+      const postsData = await getApiSearch(
+        String(root),
+        String(searchIdDetails ? searchIdDetails[1] : ""),
+        "details",
+      );
       setState({ posts: postsData, isLoading: false });
     };
 
@@ -32,7 +39,7 @@ const Details = () => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
   }, [root, searchIdDetails]);
 
   const handleRemoveDetails = () => {
@@ -43,22 +50,17 @@ const Details = () => {
   const { posts, isLoading } = state;
 
   if (isLoading) {
-    return <div className="resultContainerBody">
-      <div className="loadingDetails" id="loading"></div>
-    </div>;
+    return (
+      <div className="resultContainerBody">
+        <div className="loadingDetails" id="loading"></div>
+      </div>
+    );
   }
 
   return (
     <div className="resultContainerBody">
-      <div
-      className="close"
-      onClick={handleRemoveDetails}
-      ></div>
-      <div
-      className="resultContainerDetails"
-      key={`${posts}`}
-      ref={divRef}
-      >
+      <div className="close" onClick={handleRemoveDetails}></div>
+      <div className="resultContainerDetails" key={`${posts}`} ref={divRef}>
         {(Object.keys(posts) as (keyof StarWarsEntity)[]).map((key) => (
           <div className="lincNavBar" key={`${key}`}>
             {key}: {String(posts[key])}
@@ -66,7 +68,7 @@ const Details = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Details;

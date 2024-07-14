@@ -30,7 +30,7 @@ const SearchIn = () => {
     <div className="searchInContainer">
       {arrButton.map((_, index) => (
         <Link
-          to={`/main/${arrButton[index]}/${localStorage.getItem('search')}/page/1`}
+          to={`/main/${arrButton[index]}/${localStorage.getItem("search")}/page/1`}
           key={arrButton[index]}
           className={`searchIn${selectedIndex === index ? " active" : ""}`}
           onClick={() => handleClick(index)}

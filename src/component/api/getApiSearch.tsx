@@ -17,14 +17,13 @@ async function fetchData(url: string) {
 async function getApiSearch(
   root: string,
   idPage: string,
-  status: 'search' | 'details',
+  status: "search" | "details",
 ): Promise<StarWarsEntity> {
-  const input = document.getElementById("inputSearch") as HTMLInputElement;
-  const search = input.value.trim();
+  const search = localStorage.getItem('search');
 
   let url: string;
 
-  if (status === 'search') {
+  if (status === "search") {
     url = `https://swapi.dev/api/${root}/?search=${search}&page=${idPage}`;
   } else {
     url = `https://swapi.dev/api/${root}/${idPage}/`;
@@ -35,4 +34,4 @@ async function getApiSearch(
   return allResults;
 }
 
-export { getApiSearch }
+export { getApiSearch };

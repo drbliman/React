@@ -9,15 +9,13 @@ type Props = {
 
 const Input = (props: Props) => {
   const { search } = useParams();
-  let searchInput = String(localStorage.getItem("search"));
+  let searchInput = String(localStorage.getItem("search") || '');
 
-  if (search !== localStorage.getItem('search') && search !== undefined) {
+  if (search !== localStorage.getItem("search") && search !== undefined) {
     searchInput = String(search);
   }
 
-  const [state, setState] = React.useState(
-    searchInput || "Skywalker",
-  );
+  const [state, setState] = React.useState(searchInput || "Skywalker");
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState(event.target.value);

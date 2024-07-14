@@ -14,27 +14,28 @@ const PageLinc = (props: PageLincProps) => {
   const { idPage } = useParams();
 
   React.useEffect(() => {
-    const searchIn = document.querySelectorAll('a.searchIn');
+    const searchIn = document.querySelectorAll("a.searchIn");
     searchIn.forEach((elem) => {
-      if (elem.className.includes('active')) {
+      if (elem.className.includes("active")) {
         setActiveElement(elem.textContent);
       }
     });
   }, []);
 
   const linkDiv = arrQuantityPage.map((_, index) => (
-      <Link
-        to={`/main/${activeElement}/${localStorage.getItem('search')}/page/${index + 1}`}
-        key={`/main/${activeElement}/${localStorage.getItem('search')}/page/${index + 1}`}
-        className={`pageLink${Number(idPage) === index + 1 ? ' active': ''}`}
-      >
-        { index + 1 }
-      </Link>
-    )
+    <Link
+      to={`/main/${activeElement}/${localStorage.getItem("search")}/page/${index + 1}`}
+      key={`/main/${activeElement}/${localStorage.getItem("search")}/page/${index + 1}`}
+      className={`pageLink${Number(idPage) === index + 1 ? " active" : ""}`}
+    >
+      {index + 1}
+    </Link>
+  ));
+  return (
+    <div className="pageLinkConteiner" key={"pageLinkConteiner"}>
+      {linkDiv}
+    </div>
   );
-  return <div className="pageLinkConteiner" key={"pageLinkConteiner"}>
-    { linkDiv }
-  </div>
-}
+};
 
 export default PageLinc;

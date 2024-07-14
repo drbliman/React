@@ -1,4 +1,4 @@
-import { Routes, Route, useParams } from "react-router-dom";
+import { Routes, Route, useParams, Navigate } from "react-router-dom";
 import Header from "./component/header/header";
 import Main from "./component/main/mainDiv";
 import NotFound from "./component/main/notFound";
@@ -8,10 +8,17 @@ const App = () => (
   <>
     <Routes>
       <Route path="/" element={<Header />}>
-        <Route path="/main/:root/:search/page/:idPage" element={<RootWrapper />}>
+        <Route
+          index
+          element={<Navigate to="/main/people/skywalker/page/1" replace />}
+        />
+        <Route
+          path="/main/:root/:search/page/:idPage"
+          element={<RootWrapper />}
+        >
           <Route path="details/:idDetails" element={<Details />} />
         </Route>
-        <Route path='*' element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   </>
