@@ -1,12 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 // @ts-ignore
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  MemoryRouter,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, MemoryRouter,} from "react-router-dom";
 import Details from "../component/main/details";
 import { getApiSearch } from "../component/api/getApiSearch";
 
