@@ -1,88 +1,113 @@
 import React from "react";
-import getApiSearch from "../api/getApiSearch";
+import { getApiSearch } from "../api/getApiSearch";
 import { StarWarsEntity } from "../api/dataInterface";
-import { ResultType } from "../api/dataInterface";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import PageLinc from "./pageLink";
 import "../../../public/css/main/container.css";
 
-interface PostState {
-  posts: StarWarsEntity[];
-  isLoading: boolean;
-}
+type ResultType = {
+  name?: string;
+  title?: string;
+};
 
-export default class Post extends React.Component<{}, PostState> {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      posts: [],
-      isLoading: false,
-    };
-  }
+const Post = () => {
+  let postState: StarWarsEntity = {};
+  let firstBoot = true;
 
-  async componentDidMount() {
-    window.addEventListener("searchEvent", this.handleSearchEvent);
-    this.setState({ isLoading: true });
-    const postsData = await getApiSearch();
-    this.setState({ posts: postsData, isLoading: false });
-  }
+  const [state, setState] = React.useState({
+    posts: postState,
+    isLoading: false,
+  });
 
-  handleSearchEvent = async () => {
-    this.setState({ isLoading: true });
-    const postsData = await getApiSearch();
-    this.setState({ posts: postsData, isLoading: false });
+  const { root, search, idPage } = useParams();
+  const navigate = useNavigate();
+
+  const handleSearchEvent = async () => {
+    if (firstBoot) {
+      navigate(`/main/${root}/${search}/page/${idPage}`);
+      localStorage.setItem("search", String(search));
+    } else {
+      const searchIn = document.querySelectorAll("a.searchIn");
+      searchIn.forEach((elem) => {
+        if (elem.className.includes("active")) {
+          navigate(
+            `/main/${elem.textContent}/${localStorage.getItem("search")}/page/${idPage}`,
+          );
+        }
+      });
+    }
+    firstBoot = false;
+    setState({ posts: {}, isLoading: true });
+    const postsData = await getApiSearch(
+      String(root),
+      String(idPage),
+      "search",
+    );
+    setState({ posts: postsData, isLoading: false });
   };
 
-  getValue<T extends keyof ResultType>(
-    result: ResultType,
-    key: T,
-  ): string | string[] {
-    return String(result[key]);
+  React.useEffect(() => {
+    handleSearchEvent();
+  }, [root, idPage]);
+
+  React.useEffect(() => {
+    handleSearchEvent();
+    window.addEventListener("searchEvent", handleSearchEvent);
+  }, []);
+
+  const { posts, isLoading } = state;
+
+  if (isLoading) {
+    return <div className="loading" id="loading" data-testid="loading"></div>;
   }
 
-  render(): React.ReactNode {
-    const { posts, isLoading } = this.state;
+  if (posts && posts.results && posts.results.length < 1) {
+    return <h1>Oops, looks like nothing was found</h1>;
+  }
 
-    if (isLoading) {
-      return <div className="loading" id="loading"></div>;
-    }
+  if (posts === null) {
+    navigate(`/main/${root}/${search}/page/1`);
+    setState({ posts: {}, isLoading: true });
+  }
 
-    let allResultsEmpty = true;
-
-    for (const elem of posts) {
-      if (elem.results.length > 0) {
-        allResultsEmpty = false;
-        break;
-      }
-    }
-
-    if (allResultsEmpty) {
-      return <h1>Oops, looks like nothing was found</h1>;
-    }
-
-    if (posts.length > 0) {
-      const postsDiv = posts.map((elem, index) => {
-        if (elem.results.length > 0) {
-          return elem.results.map((result, resultIndex) => (
-            <div className="resultContainer" key={`${index}-${resultIndex}`}>
-              {(Object.keys(result) as (keyof ResultType)[]).map((key) => (
-                <div
-                  className="lincNavBar"
-                  key={`${index}-${resultIndex}-${key}`}
-                >
-                  {key}: {String(this.getValue(result, key))}
-                </div>
-              ))}
-            </div>
-          ));
-        }
-        return null;
-      });
-
+  if (posts && posts.results && posts.results.length > 0) {
+    const postsDiv = posts.results.map((elem, index) => {
+      const arrNumberPost = elem?.url?.split("/");
+      const numberPost = arrNumberPost
+        ? arrNumberPost[arrNumberPost.length - 2]
+        : undefined;
       return (
-        <div className="results" id="results">
-          {postsDiv}
+        <div className="resultContainer" key={`${index}-${index}`}>
+          <Link
+            to={`details/${root}_${numberPost}`}
+            className="lincNavBar"
+            key={`${index}-${index}-${elem}`}
+          >
+            {elem.name
+              ? elem.name
+              : (elem as ResultType).title
+                ? (elem as ResultType).title
+                : ""}
+          </Link>
         </div>
       );
+    });
+    let pagination = false;
+    if (posts && posts.count && posts.count > 10) {
+      pagination = true;
     }
-    return null;
+    return (
+      <div className="results" id="results">
+        {postsDiv}
+        {pagination ? (
+          <PageLinc num={posts.count || 1}></PageLinc>
+        ) : (
+          <div></div>
+        )}
+      </div>
+    );
   }
-}
+  return null;
+};
+
+export default Post;

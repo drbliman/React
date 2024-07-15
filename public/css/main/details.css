@@ -1,0 +1,21 @@
+.resultContainerBody {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.close {
+    position: absolute;
+    top: 0;
+    right: 3rem;
+    width: 3rem;
+    height: 3rem;
+    background-image: url('/public/svg/close.svg');
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}

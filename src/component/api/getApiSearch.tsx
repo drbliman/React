@@ -1,3 +1,5 @@
+import { StarWarsEntity } from "./dataInterface";
+
 async function fetchData(url: string) {
   try {
     const response = await fetch(url);
@@ -5,37 +7,31 @@ async function fetchData(url: string) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const data = await response.json();
-    return { success: true, data };
+    return data;
   } catch (error) {
     console.error("Fetch error:", error);
-    return { success: false, error };
   }
+  return null;
 }
 
-async function fetchAllData(urls: Array<string>) {
-  const fetchPromises = urls.map((url) => fetchData(url));
-  const results = await Promise.all(fetchPromises);
+async function getApiSearch(
+  root: string,
+  idPage: string,
+  status: "search" | "details",
+): Promise<StarWarsEntity> {
+  const search = localStorage.getItem("search");
 
-  const successfulResults = results
-    .filter((result) => result.success)
-    .map((result) => result.data);
+  let url: string;
 
-  return successfulResults;
-}
+  if (status === "search") {
+    url = `https://swapi.dev/api/${root}/?search=${search}&page=${idPage}`;
+  } else {
+    url = `https://swapi.dev/api/${root}/${idPage}/`;
+  }
 
-export default async function getApiSearch() {
-  const input = document.getElementById("inputSearch") as HTMLInputElement;
-  const search = input.value.trim();
+  const allResults = await fetchData(url);
 
-  const urls = [
-    `https://swapi.dev/api/people/?search=${search}`,
-    `https://swapi.dev/api/planets/?search=${search}`,
-    `https://swapi.dev/api/films/?search=${search}`,
-    `https://swapi.dev/api/species/?search=${search}`,
-    `https://swapi.dev/api/vehicles/?search=${search}`,
-    `https://swapi.dev/api/starships/?search=${search}`,
-  ];
-
-  const allResults = await fetchAllData(urls);
   return allResults;
 }
+
+export { getApiSearch };

@@ -1,13 +1,12 @@
-import React from "react";
+import { Outlet } from "react-router-dom";
 import Post from "./post";
 import "../../../public/css/main/main.css";
 
-export default class Main extends React.Component {
-  render(): React.ReactNode {
-    return (
-      <main className="main" id="main">
-        <Post></Post>
-      </main>
-    );
-  }
-}
+const Main = () => (
+  <main className="main" id="main">
+    <Outlet></Outlet>
+    <Post></Post>
+  </main>
+);
+
+export default Main;

@@ -1,5 +1,8 @@
 interface People {
-  results: [
+  count?: number;
+  next?: string | null;
+  previous?: string | null;
+  results?: [
     {
       films?: Array<string>;
       species?: Array<string>;
@@ -22,7 +25,10 @@ interface People {
 }
 
 interface Films {
-  results: [
+  count?: number;
+  next?: string | null;
+  previous?: string | null;
+  results?: [
     {
       title?: string;
       episode_id?: number;
@@ -43,7 +49,10 @@ interface Films {
 }
 
 interface Starships {
-  results: [
+  count?: number;
+  next?: string | null;
+  previous?: string | null;
+  results?: [
     {
       name?: string;
       model?: string;
@@ -68,7 +77,10 @@ interface Starships {
 }
 
 interface Vehicles {
-  results: [
+  count?: number;
+  next?: string | null;
+  previous?: string | null;
+  results?: [
     {
       name?: string;
       model?: string;
@@ -91,7 +103,10 @@ interface Vehicles {
 }
 
 interface Species {
-  results: [
+  count?: number;
+  next?: string | null;
+  previous?: string | null;
+  results?: [
     {
       name?: string;
       classification?: string;
@@ -113,7 +128,10 @@ interface Species {
 }
 
 interface Planets {
-  results: [
+  count?: number;
+  next?: string | null;
+  previous?: string | null;
+  results?: [
     {
       name?: string;
       diameter?: string;
