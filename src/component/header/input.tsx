@@ -15,7 +15,7 @@ const Input = (props: Props) => {
     searchInput = String(search);
   }
 
-  const [state, setState] = React.useState(searchInput || "Skywalker");
+  const [state, setState] = React.useState(searchInput || "");
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState(event.target.value);

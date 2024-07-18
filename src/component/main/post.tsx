@@ -51,8 +51,10 @@ const Post = () => {
   }, [root, idPage]);
 
   React.useEffect(() => {
-    handleSearchEvent();
     window.addEventListener("searchEvent", handleSearchEvent);
+    return () => {
+      window.removeEventListener('searchEvent', handleSearchEvent);
+    };
   }, []);
 
   const { posts, isLoading } = state;

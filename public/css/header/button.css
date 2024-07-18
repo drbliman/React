@@ -23,3 +23,30 @@
 .buttonError:hover {
     background-position: right bottom;
 }
+
+.buttonTheme {
+    cursor: pointer;
+    margin-left: 1rem;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    outline: none;
+    border: 0px solid black;
+    background-color: gray;
+    transition: all 0.3s;
+}
+
+.buttonTheme:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.buttonTheme.light {
+    background-image: url(../../svg/moon.svg);
+}
+
+.buttonTheme.dark {
+    background-image: url(../../svg/sun.svg);
+}

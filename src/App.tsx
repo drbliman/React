@@ -4,8 +4,8 @@ import Main from "./component/main/mainDiv";
 import NotFound from "./component/main/notFound";
 import Details from "./component/main/details";
 
-const App = () => (
-  <>
+const App = () => {
+  return <>
     <Routes>
       <Route path="/" element={<Header />}>
         <Route
@@ -22,7 +22,7 @@ const App = () => (
       </Route>
     </Routes>
   </>
-);
+};
 
 const RootWrapper = () => {
   const { root } = useParams<{ root: string }>();
