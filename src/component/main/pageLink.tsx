@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-import "../../../public/css/main/pageLink.css";
+import { useTheme } from "../ThemeContext";
+import "../../../public/css/main/pageLink.scss";
 
 interface PageLincProps {
   num: number;
@@ -12,6 +13,7 @@ const PageLinc = (props: PageLincProps) => {
   const [activeElement, setActiveElement] = React.useState<string | null>(null);
   const arrQuantityPage = new Array(quantityPage).fill(null);
   const { idPage } = useParams();
+  const { theme } = useTheme();
 
   React.useEffect(() => {
     const searchIn = document.querySelectorAll("a.searchIn");
@@ -26,7 +28,7 @@ const PageLinc = (props: PageLincProps) => {
     <Link
       to={`/main/${activeElement}/${localStorage.getItem("search")}/page/${index + 1}`}
       key={`/main/${activeElement}/${localStorage.getItem("search")}/page/${index + 1}`}
-      className={`pageLink${Number(idPage) === index + 1 ? " active" : ""}`}
+      className={`pageLink ${theme}${Number(idPage) === index + 1 ? " active" : ""}`}
     >
       {index + 1}
     </Link>

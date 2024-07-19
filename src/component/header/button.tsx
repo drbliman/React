@@ -1,4 +1,4 @@
-import "../../../public/css/header/button.css";
+import "../../../public/css/header/button.scss";
 
 interface ButtonProps {
   className?: string;
@@ -10,7 +10,7 @@ const Button = (props: ButtonProps) => {
   const { textContent } = props;
 
   const customEvent =
-    className === "buttonSearch" ? "searchEvent" : "errorEvent";
+    className?.includes("buttonSearch") ? "searchEvent" : "errorEvent";
 
   const handleClick = () => {
     const event = new CustomEvent(customEvent);

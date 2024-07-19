@@ -1,0 +1,59 @@
+.buttonSearch,
+.buttonError {
+  height: 2rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  outline: none;
+  border: 0px solid black;
+  background-size: 200% auto;
+  background-position: left top;
+  border-color: transparent;
+  transition: all 0.5s;
+  color: white;
+  cursor: pointer;
+  margin-left: 1rem;
+
+  &.light {
+  background-image: linear-gradient(to right, #708d58 0%, #2b3b33 51%, #708d58 100%);
+  }
+
+  &.dark {
+    background-image: linear-gradient(to right, #3b3b3b 0%, #1b1b1b 51%, #3b3b3b 100%);
+  }
+
+  &:hover {
+    background-position: right bottom;
+  }
+}
+
+.buttonTheme {
+  cursor: pointer;
+  margin-left: 1rem;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  background-size: 80%;
+  background-position: center;
+  background-repeat: no-repeat;
+  outline: none;
+  border: 0px solid black;
+  transition: all 0.3s;
+
+  &.light {
+    background-image: url(../../svg/moon.svg);
+    background-color: white;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &.dark {
+    background-image: url(../../svg/sun.svg);
+    background-color: #23272F;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+}

@@ -1,8 +1,11 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
-import "../../../public/css/header/searchIn.css";
+import { useTheme } from "../ThemeContext";
+import "../../../public/css/header/searchIn.scss";
 
 const SearchIn = () => {
+  const { theme } = useTheme();
+
   const arrButton = [
     "people",
     "planets",
@@ -32,7 +35,7 @@ const SearchIn = () => {
         <Link
           to={`/main/${arrButton[index]}/${localStorage.getItem("search")}/page/1`}
           key={arrButton[index]}
-          className={`searchIn${selectedIndex === index ? " active" : ""}`}
+          className={`searchIn ${theme}${selectedIndex === index ? " active" : ""}`}
           onClick={() => handleClick(index)}
         >
           {arrButton[index]}

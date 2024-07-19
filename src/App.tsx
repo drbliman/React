@@ -5,23 +5,25 @@ import NotFound from "./component/main/notFound";
 import Details from "./component/main/details";
 
 const App = () => {
-  return <>
-    <Routes>
-      <Route path="/" element={<Header />}>
-        <Route
-          index
-          element={<Navigate to="/main/people/skywalker/page/1" replace />}
-        />
-        <Route
-          path="/main/:root/:search/page/:idPage"
-          element={<RootWrapper />}
-        >
-          <Route path="details/:idDetails" element={<Details />} />
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<Header />}>
+          <Route
+            index
+            element={<Navigate to="/main/people/skywalker/page/1" replace />}
+          />
+          <Route
+            path="/main/:root/:search/page/:idPage"
+            element={<RootWrapper />}
+          >
+            <Route path="details/:idDetails" element={<Details />} />
+          </Route>
+          <Route path="*" element={<NotFound />} />
         </Route>
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
-  </>
+      </Routes>
+    </>
+  );
 };
 
 const RootWrapper = () => {

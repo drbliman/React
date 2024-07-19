@@ -2,9 +2,11 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { StarWarsEntity } from "../api/dataInterface";
 import { getApiSearch } from "../api/getApiSearch";
-import "../../../public/css/main/details.css";
+import { useTheme } from "../ThemeContext";
+import "../../../public/css/main/details.scss";
 
 const Details = () => {
+  const { theme } = useTheme();
   const { root, search, idPage, idDetails } = useParams();
   const searchIdDetails = React.useMemo(
     () => idDetails?.split("_"),
@@ -52,7 +54,7 @@ const Details = () => {
   if (isLoading) {
     return (
       <div className="resultContainerBody">
-        <div className="loadingDetails" id="loading"></div>
+        <div className={ `loadingDetails ${theme}` } id="loading"></div>
       </div>
     );
   }
@@ -60,9 +62,9 @@ const Details = () => {
   return (
     <div className="resultContainerBody">
       <div className="close" onClick={handleRemoveDetails}></div>
-      <div className="resultContainerDetails" key={`${posts}`} ref={divRef}>
+      <div className={ `resultContainerDetails ${theme}` } key={`${posts}`} ref={divRef}>
         {(Object.keys(posts) as (keyof StarWarsEntity)[]).map((key) => (
-          <div className="lincNavBar" key={`${key}`}>
+          <div className={ `lincNavBar ${theme}` } key={`${key}`}>
             {key}: {String(posts[key])}
           </div>
         ))}

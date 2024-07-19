@@ -5,9 +5,17 @@ body {
   justify-content: flex-start;
   min-width: 320px;
   min-height: 100vh;
+  height: 100%;
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-grow: 2;
 }
 
 @font-face {

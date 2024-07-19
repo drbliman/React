@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
-import "../public/css/index.css";
+import "../public/css/index.scss";
 import ErrorBoundary from "./errorBoundary.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "./component/ThemeContext";

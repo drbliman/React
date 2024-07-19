@@ -1,0 +1,35 @@
+.pageLinkConteiner {
+  display: flex;
+  flex-direction: row;
+}
+
+.pageLink {
+  width: 2rem;
+  height: 2rem;
+  margin: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  text-decoration: none;
+
+  &.light {
+    border: 1px solid black;
+    color: black;
+
+    &.active {
+      border: 1px solid blue;
+      color: blue;
+    }
+  }
+
+  &.dark {
+    border: 1px solid gray;
+    color: gray;
+
+    &.active {
+      color: #58C4DC;
+      border: 1px solid #58C4DC;
+    }
+  }
+}

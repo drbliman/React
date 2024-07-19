@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import "../../../public/css/header/inputs.css";
+import "../../../public/css/header/inputs.scss";
 
 type Props = {
   className: string;

@@ -2,8 +2,9 @@ import React from "react";
 import { getApiSearch } from "../api/getApiSearch";
 import { StarWarsEntity } from "../api/dataInterface";
 import { useParams, useNavigate, Link } from "react-router-dom";
+import { useTheme } from "../ThemeContext";
 import PageLinc from "./pageLink";
-import "../../../public/css/main/container.css";
+import "../../../public/css/main/container.scss";
 
 type ResultType = {
   name?: string;
@@ -13,6 +14,8 @@ type ResultType = {
 const Post = () => {
   let postState: StarWarsEntity = {};
   let firstBoot = true;
+
+  const { theme } = useTheme();
 
   const [state, setState] = React.useState({
     posts: postState,
@@ -53,14 +56,14 @@ const Post = () => {
   React.useEffect(() => {
     window.addEventListener("searchEvent", handleSearchEvent);
     return () => {
-      window.removeEventListener('searchEvent', handleSearchEvent);
+      window.removeEventListener("searchEvent", handleSearchEvent);
     };
   }, []);
 
   const { posts, isLoading } = state;
 
   if (isLoading) {
-    return <div className="loading" id="loading" data-testid="loading"></div>;
+    return <div className={ `loading ${theme}` } id="loading" data-testid="loading"></div>;
   }
 
   if (posts && posts.results && posts.results.length < 1) {
@@ -79,10 +82,10 @@ const Post = () => {
         ? arrNumberPost[arrNumberPost.length - 2]
         : undefined;
       return (
-        <div className="resultContainer" key={`${index}-${index}`}>
+        <div className={ `resultContainer ${theme}` } key={`${index}-${index}`}>
           <Link
             to={`details/${root}_${numberPost}`}
-            className="lincNavBar"
+            className={ `lincNavBar ${theme}` }
             key={`${index}-${index}-${elem}`}
           >
             {elem.name
