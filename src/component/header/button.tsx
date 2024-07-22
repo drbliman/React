@@ -9,8 +9,9 @@ const Button = (props: ButtonProps) => {
   const { className } = props;
   const { textContent } = props;
 
-  const customEvent =
-    className?.includes("buttonSearch") ? "searchEvent" : "errorEvent";
+  const customEvent = className?.includes("buttonSearch")
+    ? "searchEvent"
+    : "errorEvent";
 
   const handleClick = () => {
     const event = new CustomEvent(customEvent);

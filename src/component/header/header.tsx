@@ -13,8 +13,14 @@ const Header = () => {
       <header className={`header ${theme}`} id="header">
         <div className="headerContainer" id="headerContainer">
           <Input className={`inputSearch ${theme}`} placeholder="Search..." />
-          <Button className={`buttonSearch ${theme}`} textContent="Search"></Button>
-          <Button className={`buttonError ${theme}`} textContent="Error"></Button>
+          <Button
+            className={`buttonSearch ${theme}`}
+            textContent="Search"
+          ></Button>
+          <Button
+            className={`buttonError ${theme}`}
+            textContent="Error"
+          ></Button>
           <button
             className={`buttonTheme ${theme}`}
             id="buttonTheme"

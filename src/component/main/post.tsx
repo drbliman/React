@@ -1,8 +1,9 @@
 import React from "react";
-import { getApiSearch } from "../api/getApiSearch";
+// import { getApiSearch } from "../api/getApiSearch";
 import { StarWarsEntity } from "../api/dataInterface";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useTheme } from "../ThemeContext";
+import { useSearchEntitiesQuery } from "../api/starWarsApiSlice";
 import PageLinc from "./pageLink";
 import "../../../public/css/main/container.scss";
 
@@ -12,23 +13,31 @@ type ResultType = {
 };
 
 const Post = () => {
-  let postState: StarWarsEntity = {};
-  let firstBoot = true;
-
   const { theme } = useTheme();
-
-  const [state, setState] = React.useState({
-    posts: postState,
+  const { root, search, idPage } = useParams();
+  const navigate = useNavigate();
+  
+  const [state, setState] = React.useState<{
+    posts: StarWarsEntity | null;
+    isLoading: boolean;
+  }>({
+    posts: null,
     isLoading: false,
   });
 
-  const { root, search, idPage } = useParams();
-  const navigate = useNavigate();
+  let firstBoot = true;
 
-  const handleSearchEvent = async () => {
+  const { data: postsData, isLoading: isQueryLoading } = useSearchEntitiesQuery({
+    root: String(root),
+    search: String(search),
+    page: String(idPage || '1'),
+  });
+
+  const handleSearchEvent = () => {
     if (firstBoot) {
       navigate(`/main/${root}/${search}/page/${idPage}`);
       localStorage.setItem("search", String(search));
+      firstBoot = false;
     } else {
       const searchIn = document.querySelectorAll("a.searchIn");
       searchIn.forEach((elem) => {
@@ -39,19 +48,17 @@ const Post = () => {
         }
       });
     }
-    firstBoot = false;
-    setState({ posts: {}, isLoading: true });
-    const postsData = await getApiSearch(
-      String(root),
-      String(idPage),
-      "search",
-    );
-    setState({ posts: postsData, isLoading: false });
+
+    setState({ posts: null, isLoading: true });
+
+    if (postsData) {
+      setState({ posts: postsData, isLoading: false });
+    }
   };
 
   React.useEffect(() => {
     handleSearchEvent();
-  }, [root, idPage]);
+  }, [root, search, idPage, postsData]);
 
   React.useEffect(() => {
     window.addEventListener("searchEvent", handleSearchEvent);
@@ -62,8 +69,10 @@ const Post = () => {
 
   const { posts, isLoading } = state;
 
-  if (isLoading) {
-    return <div className={ `loading ${theme}` } id="loading" data-testid="loading"></div>;
+  if (isLoading || isQueryLoading) {
+    return (
+      <div className={`loading ${theme}`} id="loading" data-testid="loading"></div>
+    );
   }
 
   if (posts && posts.results && posts.results.length < 1) {
@@ -71,8 +80,7 @@ const Post = () => {
   }
 
   if (posts === null) {
-    navigate(`/main/${root}/${search}/page/1`);
-    setState({ posts: {}, isLoading: true });
+    return null;
   }
 
   if (posts && posts.results && posts.results.length > 0) {
@@ -82,10 +90,10 @@ const Post = () => {
         ? arrNumberPost[arrNumberPost.length - 2]
         : undefined;
       return (
-        <div className={ `resultContainer ${theme}` } key={`${index}-${index}`}>
+        <div className={`resultContainer ${theme}`} key={`${index}-${index}`}>
           <Link
             to={`details/${root}_${numberPost}`}
-            className={ `lincNavBar ${theme}` }
+            className={`lincNavBar ${theme}`}
             key={`${index}-${index}-${elem}`}
           >
             {elem.name
@@ -97,10 +105,12 @@ const Post = () => {
         </div>
       );
     });
+
     let pagination = false;
     if (posts && posts.count && posts.count > 10) {
       pagination = true;
     }
+
     return (
       <div className="results" id="results">
         {postsDiv}
@@ -112,6 +122,7 @@ const Post = () => {
       </div>
     );
   }
+
   return null;
 };
 
