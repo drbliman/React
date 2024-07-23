@@ -1,5 +1,4 @@
 import React from "react";
-// import { getApiSearch } from "../api/getApiSearch";
 import { StarWarsEntity } from "../api/dataInterface";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useTheme } from "../ThemeContext";
@@ -16,7 +15,7 @@ const Post = () => {
   const { theme } = useTheme();
   const { root, search, idPage } = useParams();
   const navigate = useNavigate();
-  
+
   const [state, setState] = React.useState<{
     posts: StarWarsEntity | null;
     isLoading: boolean;
@@ -27,11 +26,13 @@ const Post = () => {
 
   let firstBoot = true;
 
-  const { data: postsData, isLoading: isQueryLoading } = useSearchEntitiesQuery({
-    root: String(root),
-    search: String(search),
-    page: String(idPage || '1'),
-  });
+  const { data: postsData, isLoading: isQueryLoading } = useSearchEntitiesQuery(
+    {
+      root: String(root),
+      search: String(search),
+      page: String(idPage || "1"),
+    },
+  );
 
   const handleSearchEvent = () => {
     if (firstBoot) {
@@ -71,7 +72,11 @@ const Post = () => {
 
   if (isLoading || isQueryLoading) {
     return (
-      <div className={`loading ${theme}`} id="loading" data-testid="loading"></div>
+      <div
+        className={`loading ${theme}`}
+        id="loading"
+        data-testid="loading"
+      ></div>
     );
   }
 

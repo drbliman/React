@@ -5,7 +5,7 @@ import "../public/css/index.scss";
 import ErrorBoundary from "./errorBoundary.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "./component/ThemeContext";
-import { Provider } from 'react-redux';
+import { Provider } from "react-redux";
 import { store } from "./component/api/store.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

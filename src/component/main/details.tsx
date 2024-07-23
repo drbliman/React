@@ -1,17 +1,13 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { StarWarsEntity } from "../api/dataInterface";
-import { getApiSearch } from "../api/getApiSearch";
 import { useTheme } from "../ThemeContext";
+import { useGetEntityDetailsQuery } from "../api/starWarsApiSlice";
 import "../../../public/css/main/details.scss";
 
 const Details = () => {
   const { theme } = useTheme();
   const { root, search, idPage, idDetails } = useParams();
-  const searchIdDetails = React.useMemo(
-    () => idDetails?.split("_"),
-    [idDetails],
-  );
   const navigate = useNavigate();
   let postState: StarWarsEntity = {};
 
@@ -20,17 +16,22 @@ const Details = () => {
     isLoading: false,
   });
 
+  const { data: postsData } = useGetEntityDetailsQuery(
+    {
+      root: String(root),
+      id: String(idDetails?.split("_")[1]),
+    },
+  );
+
   const divRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     const fetchData = async () => {
       setState({ posts: {}, isLoading: true });
-      const postsData = await getApiSearch(
-        String(root),
-        String(searchIdDetails ? searchIdDetails[1] : ""),
-        "details",
-      );
-      setState({ posts: postsData, isLoading: false });
+      console.log({ data: postsData })
+      if (postsData) {
+        setState({ posts: postsData, isLoading: false });
+      }
     };
 
     fetchData();
@@ -42,7 +43,7 @@ const Details = () => {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-  }, [root, searchIdDetails]);
+  }, [root, idDetails, postsData]);
 
   const handleRemoveDetails = () => {
     const baseUrl = `/main/${root}/${search}/page/${idPage}`;

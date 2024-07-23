@@ -1,5 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { starWarsApi } from './starWarsApiSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import { starWarsApi } from "./starWarsApiSlice";
 
 export const store = configureStore({
   reducer: {
