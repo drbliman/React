@@ -16,19 +16,17 @@ const Details = () => {
     isLoading: false,
   });
 
-  const { data: postsData } = useGetEntityDetailsQuery(
-    {
-      root: String(root),
-      id: String(idDetails?.split("_")[1]),
-    },
-  );
+  const { data: postsData } = useGetEntityDetailsQuery({
+    root: String(root),
+    id: String(idDetails?.split("_")[1]),
+  });
 
   const divRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     const fetchData = async () => {
       setState({ posts: {}, isLoading: true });
-      console.log({ data: postsData })
+      console.log({ data: postsData });
       if (postsData) {
         setState({ posts: postsData, isLoading: false });
       }

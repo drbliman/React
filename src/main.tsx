@@ -6,7 +6,7 @@ import ErrorBoundary from "./errorBoundary.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "./component/ThemeContext";
 import { Provider } from "react-redux";
-import { store } from "./component/api/store.tsx";
+import store from "./component/store/store.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <ThemeProvider>
           <Provider store={store}>
-            <App />
+              <App />
           </Provider>
         </ThemeProvider>
       </BrowserRouter>

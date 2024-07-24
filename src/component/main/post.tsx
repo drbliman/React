@@ -3,8 +3,10 @@ import { StarWarsEntity } from "../api/dataInterface";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useTheme } from "../ThemeContext";
 import { useSearchEntitiesQuery } from "../api/starWarsApiSlice";
+import Selection from "./selection";
 import PageLinc from "./pageLink";
 import "../../../public/css/main/container.scss";
+import "../../../public/css/main/selection.scss";
 
 type ResultType = {
   name?: string;
@@ -96,6 +98,7 @@ const Post = () => {
         : undefined;
       return (
         <div className={`resultContainer ${theme}`} key={`${index}-${index}`}>
+          <Selection id={`${root}_${numberPost}`}></Selection>
           <Link
             to={`details/${root}_${numberPost}`}
             className={`lincNavBar ${theme}`}

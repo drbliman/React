@@ -1,13 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { StarWarsEntity } from "./dataInterface";
 
-export type SearchResponse = {
-  results: StarWarsEntity[];
-  count: number;
-  next: string | null;
-  previous: string | null;
-};
-
 export const starWarsApi = createApi({
   reducerPath: "starWarsApi",
   baseQuery: fetchBaseQuery({ baseUrl: "https://swapi.dev/api/" }),

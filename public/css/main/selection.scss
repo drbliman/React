@@ -1,0 +1,49 @@
+.selection {
+  position: relative;
+  width: 3rem;
+  height: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+
+  &.light {
+    background-color: rgba(0, 0, 0, 0.2);
+
+    &::after {
+      content: '';
+      height: 1.2rem;
+      width: 1.2rem;
+      border-radius: 50%;
+      position: absolute;
+      top: -0.1rem;
+      left: 0;
+      background-color: rgb(41, 41, 41);
+      transition: left 0.3s;
+    }
+
+    &.active::after {
+      background-color: #708d58;
+      left: 2rem;
+    }
+  }
+
+  &.dark {
+    background-color: rgba(255, 255, 255, 0.2);
+
+    &::after {
+      content: '';
+      height: 1.2rem;
+      width: 1.2rem;
+      border-radius: 50%;
+      position: absolute;
+      top: -0.1rem;
+      left: 0;
+      background-color: rgb(49, 49, 49);
+      transition: left 0.3s;
+    }
+
+    &.active::after {
+      background-color: #58C4DC;
+      left: 2rem;
+    }
+  }
+}
