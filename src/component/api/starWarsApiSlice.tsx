@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { StarWarsEntity } from "./dataInterface";
+import { StarWarsEntity, ResultType } from "./dataInterface";
 
 export const starWarsApi = createApi({
   reducerPath: "starWarsApi",
@@ -13,7 +13,7 @@ export const starWarsApi = createApi({
         `${root}/?search=${search}&page=${page}`,
     }),
     getEntityDetails: builder.query<
-      StarWarsEntity,
+      ResultType,
       { root: string; id: string }
     >({
       query: ({ root, id }) => `${root}/${id}/`,

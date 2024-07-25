@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { StarWarsEntity } from "../api/dataInterface";
+import { ResultType } from "../api/dataInterface";
 import { useTheme } from "../ThemeContext";
 import { useGetEntityDetailsQuery } from "../api/starWarsApiSlice";
 import "../../../public/css/main/details.scss";
@@ -9,7 +9,7 @@ const Details = () => {
   const { theme } = useTheme();
   const { root, search, idPage, idDetails } = useParams();
   const navigate = useNavigate();
-  let postState: StarWarsEntity = {};
+  let postState: ResultType = {};
 
   const [state, setState] = React.useState({
     posts: postState,
@@ -66,7 +66,7 @@ const Details = () => {
         key={`${posts}`}
         ref={divRef}
       >
-        {(Object.keys(posts) as (keyof StarWarsEntity)[]).map((key) => (
+        {(Object.keys(posts) as (keyof ResultType)[]).map((key) => (
           <div className={`lincNavBar ${theme}`} key={`${key}`}>
             {key}: {String(posts[key])}
           </div>

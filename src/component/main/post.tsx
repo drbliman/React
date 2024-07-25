@@ -23,10 +23,8 @@ const Post = () => {
     isLoading: boolean;
   }>({
     posts: null,
-    isLoading: false,
+    isLoading: true,
   });
-
-  let firstBoot = true;
 
   const { data: postsData, isLoading: isQueryLoading } = useSearchEntitiesQuery(
     {
@@ -36,12 +34,18 @@ const Post = () => {
     },
   );
 
-  const handleSearchEvent = () => {
-    if (firstBoot) {
-      navigate(`/main/${root}/${search}/page/${idPage}`);
-      localStorage.setItem("search", String(search));
-      firstBoot = false;
-    } else {
+  React.useEffect(() => {
+    setState((prevState) => ({ ...prevState, isLoading: true }));
+  }, [root, search, idPage]);
+
+  React.useEffect(() => {
+    if (!isQueryLoading && postsData) {
+      setState({ posts: postsData, isLoading: false });
+    }
+  }, [isQueryLoading, postsData]);
+
+  React.useEffect(() => {
+    const handleSearchEvent = () => {
       const searchIn = document.querySelectorAll("a.searchIn");
       searchIn.forEach((elem) => {
         if (elem.className.includes("active")) {
@@ -50,25 +54,13 @@ const Post = () => {
           );
         }
       });
-    }
+    };
 
-    setState({ posts: null, isLoading: true });
-
-    if (postsData) {
-      setState({ posts: postsData, isLoading: false });
-    }
-  };
-
-  React.useEffect(() => {
-    handleSearchEvent();
-  }, [root, search, idPage, postsData]);
-
-  React.useEffect(() => {
     window.addEventListener("searchEvent", handleSearchEvent);
     return () => {
       window.removeEventListener("searchEvent", handleSearchEvent);
     };
-  }, []);
+  }, [idPage, navigate]);
 
   const { posts, isLoading } = state;
 
@@ -107,8 +99,8 @@ const Post = () => {
             {elem.name
               ? elem.name
               : (elem as ResultType).title
-                ? (elem as ResultType).title
-                : ""}
+              ? (elem as ResultType).title
+              : ""}
           </Link>
         </div>
       );

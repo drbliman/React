@@ -1,0 +1,73 @@
+.popUpDownload {
+  position: fixed;
+  bottom: -4rem;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 1rem;
+  border-radius: 1rem;
+  padding: 1rem;
+  display: none;
+  animation-duration: 0.5s;
+  animation-name: down;
+
+  &.light {
+    border: 1px solid #45a173;
+    background-color: white;
+  }
+
+  &.dark {
+    border: 1px solid #58C4DC;
+    background-color: #23272F;
+  }
+
+  &.active {
+    display: flex;
+    bottom: 1rem;
+    animation-duration: 0.5s;
+    animation-name: up;
+  }
+}
+
+.popUpDownloadState {
+  &.light {
+    color: #45a173;
+  }
+
+  &.dark {
+    color: #58C4DC;
+  }
+}
+
+@keyframes up {
+  from {
+    display: flex;
+    bottom: -4rem;
+  }
+
+  50% {
+    bottom: 2rem;
+  }
+
+  to {
+    display: flex;
+    bottom: 1rem;
+  }
+}
+
+@keyframes down {
+  from {
+    display: flex;
+    bottom: 1rem;
+  }
+
+  50% {
+    display: flex;
+    bottom: 2rem;
+  }
+
+  to {
+    display: none;
+    bottom: -4rem;
+  }
+}

@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { useTheme } from "../ThemeContext";
 import Post from "./post";
+import PopUpDownload from "./popUpDownload";
 import "../../../public/css/main/main.scss";
 
 const Main = () => {
@@ -9,6 +10,7 @@ const Main = () => {
     <main className={`main ${theme}`} id="main">
       <Outlet></Outlet>
       <Post></Post>
+      <PopUpDownload></PopUpDownload>
     </main>
   );
 };

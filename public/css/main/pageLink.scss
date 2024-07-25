@@ -1,6 +1,7 @@
 .pageLinkConteiner {
   display: flex;
   flex-direction: row;
+  margin-bottom: 4rem;
 }
 
 .pageLink {
@@ -18,8 +19,8 @@
     color: black;
 
     &.active {
-      border: 1px solid blue;
-      color: blue;
+      border: 1px solid #45a173;
+      color: #45a173;
     }
   }
 
