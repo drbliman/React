@@ -26,7 +26,6 @@ const Details = () => {
   React.useEffect(() => {
     const fetchData = async () => {
       setState({ posts: {}, isLoading: true });
-      console.log({ data: postsData });
       if (postsData) {
         setState({ posts: postsData, isLoading: false });
       }

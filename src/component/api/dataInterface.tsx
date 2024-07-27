@@ -203,7 +203,7 @@ interface ResultType {
   terrain?: string;
   surface_water?: string;
   residents?: Array<string>;
-  [key: string]:  string | number | undefined | Array<string>;
+  [key: string]: string | number | undefined | Array<string>;
 }
 
 type StarWarsEntity = People & Films & Starships & Vehicles & Species & Planets;

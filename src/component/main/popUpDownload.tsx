@@ -22,13 +22,24 @@ const PopUpDownload = () => {
 
   const handleClickRemoveAll = () => {
     dispatch(removeAll());
-  }
+  };
 
-  return <div className={`popUpDownload ${theme} ${state > 0 ? 'active': ''}`}>
-    <div className={`popUpDownloadState ${theme}`}>{`Load ${state} items`}</div>
-    <button className={`buttonDownload ${theme}`} onClick={CsvDownloader}>Download</button>
-    <button className={`buttonUnselectAll ${theme}`} onClick={handleClickRemoveAll}>Unselect all</button>
-  </div>
-}
+  return (
+    <div className={`popUpDownload ${theme} ${state > 0 ? "active" : ""}`}>
+      <div
+        className={`popUpDownloadState ${theme}`}
+      >{`Load ${state} items`}</div>
+      <button className={`buttonDownload ${theme}`} onClick={CsvDownloader}>
+        Download
+      </button>
+      <button
+        className={`buttonUnselectAll ${theme}`}
+        onClick={handleClickRemoveAll}
+      >
+        Unselect all
+      </button>
+    </div>
+  );
+};
 
 export default PopUpDownload;

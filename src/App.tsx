@@ -5,13 +5,16 @@ import NotFound from "./component/main/notFound";
 import Details from "./component/main/details";
 
 const App = () => {
+  if (!localStorage.getItem('search')) {
+    localStorage.setItem('search', 'skywalker')
+  }
   return (
     <>
       <Routes>
         <Route path="/" element={<Header />}>
           <Route
             index
-            element={<Navigate to="/main/people/skywalker/page/1" replace />}
+            element={<Navigate to={`/main/people/${localStorage.getItem('search')}/page/1`} replace />}
           />
           <Route
             path="/main/:root/:search/page/:idPage"

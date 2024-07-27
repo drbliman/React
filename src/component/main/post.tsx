@@ -50,7 +50,7 @@ const Post = () => {
       searchIn.forEach((elem) => {
         if (elem.className.includes("active")) {
           navigate(
-            `/main/${elem.textContent}/${localStorage.getItem("search")}/page/${idPage}`,
+            `/main/${elem.textContent}/${localStorage.getItem("search")}/page/1`,
           );
         }
       });
@@ -99,8 +99,8 @@ const Post = () => {
             {elem.name
               ? elem.name
               : (elem as ResultType).title
-              ? (elem as ResultType).title
-              : ""}
+                ? (elem as ResultType).title
+                : ""}
           </Link>
         </div>
       );

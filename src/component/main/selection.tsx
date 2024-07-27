@@ -4,7 +4,6 @@ import { useTheme } from "../ThemeContext";
 import { useGetEntityDetailsQuery } from "../api/starWarsApiSlice";
 import { addElement, removeElement } from "../store/store";
 import { ResultType } from "../api/dataInterface";
-import store from "../store/store";
 
 interface SelectionProps {
   id: string;
@@ -41,17 +40,20 @@ const Selection = (props: SelectionProps) => {
       if (postsData) {
         if (event.currentTarget.className.includes("active")) {
           dispatch(addElement(postsData as ResultType));
-          console.log(store.getState());
         } else {
           dispatch(removeElement(postsData as ResultType));
-          console.log(store.getState());
         }
       }
     }
   };
 
   return (
-    <div className={`selection ${theme} ${activeClass? 'active' : ''}`} id={id} onClick={handleClick} key={id}></div>
+    <div
+      className={`selection ${theme} ${activeClass ? "active" : ""}`}
+      id={id}
+      onClick={handleClick}
+      key={id}
+    ></div>
   );
 };
 

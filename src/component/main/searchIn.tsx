@@ -1,10 +1,11 @@
 import React from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../ThemeContext";
 import "../../../public/css/header/searchIn.scss";
 
 const SearchIn = () => {
   const { theme } = useTheme();
+  const navigate = useNavigate();
 
   const arrButton = [
     "people",
@@ -27,7 +28,10 @@ const SearchIn = () => {
   React.useEffect(() => {
     const event = new CustomEvent("searchInEvent");
     window.dispatchEvent(event);
-  }, [selectedIndex]);
+    if (selectedIndex === -1) {
+      setSelectedIndex(0);
+    }
+  }, [selectedIndex, navigate]);
 
   return (
     <div className="searchInContainer">
