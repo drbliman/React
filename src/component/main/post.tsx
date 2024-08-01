@@ -1,88 +1,129 @@
 import React from "react";
-import getApiSearch from "../api/getApiSearch";
 import { StarWarsEntity } from "../api/dataInterface";
-import { ResultType } from "../api/dataInterface";
-import "../../../public/css/main/container.css";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { useTheme } from "../ThemeContext";
+import { useSearchEntitiesQuery } from "../api/starWarsApiSlice";
+import Selection from "./selection";
+import PageLinc from "./pageLink";
+import "../../../public/css/main/container.scss";
+import "../../../public/css/main/selection.scss";
 
-interface PostState {
-  posts: StarWarsEntity[];
-  isLoading: boolean;
-}
+type ResultType = {
+  name?: string;
+  title?: string;
+};
 
-export default class Post extends React.Component<{}, PostState> {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      posts: [],
-      isLoading: false,
-    };
-  }
+const Post = () => {
+  const { theme } = useTheme();
+  const { root, search, idPage } = useParams();
+  const navigate = useNavigate();
 
-  async componentDidMount() {
-    window.addEventListener("searchEvent", this.handleSearchEvent);
-    this.setState({ isLoading: true });
-    const postsData = await getApiSearch();
-    this.setState({ posts: postsData, isLoading: false });
-  }
+  const [state, setState] = React.useState<{
+    posts: StarWarsEntity | null;
+    isLoading: boolean;
+  }>({
+    posts: null,
+    isLoading: true,
+  });
 
-  handleSearchEvent = async () => {
-    this.setState({ isLoading: true });
-    const postsData = await getApiSearch();
-    this.setState({ posts: postsData, isLoading: false });
-  };
+  const { data: postsData, isLoading: isQueryLoading } = useSearchEntitiesQuery(
+    {
+      root: String(root),
+      search: String(search),
+      page: String(idPage || "1"),
+    },
+  );
 
-  getValue<T extends keyof ResultType>(
-    result: ResultType,
-    key: T,
-  ): string | string[] {
-    return String(result[key]);
-  }
+  React.useEffect(() => {
+    setState((prevState) => ({ ...prevState, isLoading: true }));
+  }, [root, search, idPage]);
 
-  render(): React.ReactNode {
-    const { posts, isLoading } = this.state;
-
-    if (isLoading) {
-      return <div className="loading" id="loading"></div>;
+  React.useEffect(() => {
+    if (!isQueryLoading && postsData) {
+      setState({ posts: postsData, isLoading: false });
     }
+  }, [isQueryLoading, postsData]);
 
-    let allResultsEmpty = true;
-
-    for (const elem of posts) {
-      if (elem.results.length > 0) {
-        allResultsEmpty = false;
-        break;
-      }
-    }
-
-    if (allResultsEmpty) {
-      return <h1>Oops, looks like nothing was found</h1>;
-    }
-
-    if (posts.length > 0) {
-      const postsDiv = posts.map((elem, index) => {
-        if (elem.results.length > 0) {
-          return elem.results.map((result, resultIndex) => (
-            <div className="resultContainer" key={`${index}-${resultIndex}`}>
-              {(Object.keys(result) as (keyof ResultType)[]).map((key) => (
-                <div
-                  className="lincNavBar"
-                  key={`${index}-${resultIndex}-${key}`}
-                >
-                  {key}: {String(this.getValue(result, key))}
-                </div>
-              ))}
-            </div>
-          ));
+  React.useEffect(() => {
+    const handleSearchEvent = () => {
+      const searchIn = document.querySelectorAll("a.searchIn");
+      searchIn.forEach((elem) => {
+        if (elem.className.includes("active")) {
+          navigate(
+            `/main/${elem.textContent}/${localStorage.getItem("search")}/page/1`,
+          );
         }
-        return null;
       });
+    };
 
-      return (
-        <div className="results" id="results">
-          {postsDiv}
-        </div>
-      );
-    }
+    window.addEventListener("searchEvent", handleSearchEvent);
+    return () => {
+      window.removeEventListener("searchEvent", handleSearchEvent);
+    };
+  }, [idPage, navigate]);
+
+  const { posts, isLoading } = state;
+
+  if (isLoading || isQueryLoading) {
+    return (
+      <div
+        className={`loading ${theme}`}
+        id="loading"
+        data-testid="loading"
+      ></div>
+    );
+  }
+
+  if (posts && posts.results && posts.results.length < 1) {
+    return <h1>Oops, looks like nothing was found</h1>;
+  }
+
+  if (posts === null) {
     return null;
   }
-}
+
+  if (posts && posts.results && posts.results.length > 0) {
+    const postsDiv = posts.results.map((elem, index) => {
+      const arrNumberPost = elem?.url?.split("/");
+      const numberPost = arrNumberPost
+        ? arrNumberPost[arrNumberPost.length - 2]
+        : undefined;
+      return (
+        <div className={`resultContainer ${theme}`} key={`${index}-${index}`}>
+          <Selection id={`${root}_${numberPost}`}></Selection>
+          <Link
+            to={`details/${root}_${numberPost}`}
+            className={`lincNavBar ${theme}`}
+            key={`${index}-${index}-${elem}`}
+          >
+            {elem.name
+              ? elem.name
+              : (elem as ResultType).title
+                ? (elem as ResultType).title
+                : ""}
+          </Link>
+        </div>
+      );
+    });
+
+    let pagination = false;
+    if (posts && posts.count && posts.count > 10) {
+      pagination = true;
+    }
+
+    return (
+      <div className="results" id="results">
+        {postsDiv}
+        {pagination ? (
+          <PageLinc num={posts.count || 1}></PageLinc>
+        ) : (
+          <div></div>
+        )}
+      </div>
+    );
+  }
+
+  return null;
+};
+
+export default Post;

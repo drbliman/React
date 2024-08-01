@@ -1,45 +1,39 @@
 import React from "react";
-import "../../../public/css/header/inputs.css";
-
-interface InputProps {
-  className?: string;
-  placeholder?: string;
-}
+import { useParams } from "react-router-dom";
+import "../../../public/css/header/inputs.scss";
 
 type Props = {
   className: string;
   placeholder: string;
 };
 
-type State = {
-  inputValue: string;
-};
+const Input = (props: Props) => {
+  const { search } = useParams();
+  let searchInput = String(localStorage.getItem("search") || "");
 
-export default class Input extends React.Component<InputProps, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      inputValue: String(localStorage.getItem("search")) || "Skywalker",
-    };
+  if (search !== localStorage.getItem("search") && search !== undefined) {
+    searchInput = String(search);
   }
 
-  handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ inputValue: event.target.value });
+  const [state, setState] = React.useState(searchInput || "");
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setState(event.target.value);
     localStorage.setItem("search", `${event.target.value}`);
   };
 
-  render(): React.ReactNode {
-    const { className } = this.props;
-    const { placeholder } = this.props;
-    const { inputValue } = this.state;
-    return (
-      <input
-        className={className}
-        id={className}
-        placeholder={placeholder}
-        value={inputValue}
-        onChange={this.handleInputChange}
-      ></input>
-    );
-  }
-}
+  const { className } = props;
+  const { placeholder } = props;
+
+  return (
+    <input
+      className={className}
+      id={className}
+      placeholder={placeholder}
+      value={state}
+      onChange={handleInputChange}
+    ></input>
+  );
+};
+
+export default Input;

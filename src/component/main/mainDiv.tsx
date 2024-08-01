@@ -1,13 +1,18 @@
-import React from "react";
+import { Outlet } from "react-router-dom";
+import { useTheme } from "../ThemeContext";
 import Post from "./post";
-import "../../../public/css/main/main.css";
+import PopUpDownload from "./popUpDownload";
+import "../../../public/css/main/main.scss";
 
-export default class Main extends React.Component {
-  render(): React.ReactNode {
-    return (
-      <main className="main" id="main">
-        <Post></Post>
-      </main>
-    );
-  }
-}
+const Main = () => {
+  const { theme } = useTheme();
+  return (
+    <main className={`main ${theme}`} id="main">
+      <Outlet></Outlet>
+      <Post></Post>
+      <PopUpDownload></PopUpDownload>
+    </main>
+  );
+};
+
+export default Main;
