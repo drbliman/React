@@ -3,10 +3,11 @@ import Header from "./component/header/header";
 import Main from "./component/main/mainDiv";
 import NotFound from "./component/main/notFound";
 import Details from "./component/main/details";
+import React from "react";
 
 const App = () => {
-  if (!localStorage.getItem('search')) {
-    localStorage.setItem('search', 'skywalker')
+  if (!localStorage.getItem("search")) {
+    localStorage.setItem("search", "skywalker");
   }
   return (
     <>
@@ -14,7 +15,12 @@ const App = () => {
         <Route path="/" element={<Header />}>
           <Route
             index
-            element={<Navigate to={`/main/people/${localStorage.getItem('search')}/page/1`} replace />}
+            element={
+              <Navigate
+                to={`/main/people/${localStorage.getItem("search")}/page/1`}
+                replace
+              />
+            }
           />
           <Route
             path="/main/:root/:search/page/:idPage"

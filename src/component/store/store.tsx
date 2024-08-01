@@ -17,7 +17,7 @@ const elementsSlice = createSlice({
         if (idElement) {
           if (
             elem.url?.includes(
-              `${idElement[idElement.length - 2]}/${idElement[idElement.length - 1]}`
+              `${idElement[idElement.length - 2]}/${idElement[idElement.length - 1]}`,
             )
           ) {
             state.splice(index, 1);
